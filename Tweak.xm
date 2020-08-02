@@ -81,6 +81,18 @@ int applicationDidFinishLaunching;
 }
 %end
 
+
+/**
+ * Disable swipe down home bar to toogle Reachability
+ * Note: still it can be toggled by swiping down at bottom, but swipe down height is very small
+ */
+%hook SBReachabilityGestureRecognizer
+  - (id)initWithTarget:(id)arg1 action:(SEL)arg2 {
+    return nil;
+  }
+%end
+
+
 /**
  * Restore home button to invoke Siri (and screenshot capture)
  */
