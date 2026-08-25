@@ -1,0 +1,37 @@
+name: Build Tweak Package
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Theos & iOS SDKs
+        run: |
+          git clone --recursive https://github.com/theos/theos.git $GITHUB_WORKSPACE/theos
+          rm -rf $GITHUB_WORKSPACE/theos/sdks
+          git clone --depth=1 https://github.com/theos/sdks.git $GITHUB_WORKSPACE/theos/sdks
+          echo "THEOS=$GITHUB_WORKSPACE/theos" >> $GITHUB_ENV
+
+      - name: Compile Rootless Package
+        run: |
+          make clean
+          make package FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless
+
+      - name: Upload .deb Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Rootless-Deb-Package
+          path: packages/*.deb
+          if-no-files-found: error

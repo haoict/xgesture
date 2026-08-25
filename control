@@ -1,9 +1,9 @@
 Package: com.haoict.xgesture
 Name: XGesture
-Depends: mobilesubstrate, firmware (>= 12)
+Depends: mobilesubstrate, firmware (>= 15.0)
 Version: 0.0.1
-Architecture: iphoneos-arm
-Description: iPhone X gestures for iPhone 5-8, minimalist code to not affect battery
+Architecture: iphoneos-arm64
+Description: iPhone X gestures for iPhone 5-8 on iOS 15 rootless
 Maintainer: Hao Nguyen
 Author: Hao Nguyen
 Section: Tweaks
